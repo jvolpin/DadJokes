@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import SearchForm from "./SearchForm";
+import SearchResults from "./SearchResults";
 import "./styles.css";
 
 class App extends React.Component {
@@ -48,16 +49,6 @@ class App extends React.Component {
     this.setState({ searchTerm: value });
   }
 
-  renderJokes() {
-    return (
-      <ul className="jokes-list">
-        {this.state.jokes.map(item => (
-          <li key={item.id}>{item.joke}</li>
-        ))}
-      </ul>
-    );
-  }
-
   render() {
     return (
       <div className="App">
@@ -69,9 +60,11 @@ class App extends React.Component {
           onSingleSearch={() => this.searchJokes(1)}
         />
 
-        {this.state.isFetchingJokes
-          ? "searching for jokes..."
-          : this.renderJokes()}
+        {this.state.isFetchingJokes ? (
+          "searching for jokes..."
+        ) : (
+          <SearchResults afterReceivingResults={this.state.jokes} />
+        )}
       </div>
     );
   }
